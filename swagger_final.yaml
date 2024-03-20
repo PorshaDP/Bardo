@@ -1,0 +1,351 @@
+openapi: 3.0.0
+info: 
+  title: Нормативы
+  version: 1.0.0 #don't like
+servers: 
+  - url: http://localhost:8080/normative/
+    description: Base
+paths:
+  /student/create:
+    post: 
+      summary: Создание студента
+      tags: 
+        - Student
+      operationId: createStudent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '200': 
+          description: Успешный ответ с созданным студентом
+          content: 
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Student'
+          
+        'default':
+          description: Все нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  
+  /group/create:
+    post: 
+      summary: Создание группы студентов
+      tags: 
+        - Group
+      operationId: createGroup
+      requestBody:
+        required: True
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Student'
+      responses:
+        '200': 
+          description: Успешный ответ с созданной группой
+          content: 
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Group'
+          
+        'default':
+          description: Все нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'  
+                
+  /group/view_group:
+    get:
+      summary: Метод получения группы со списком студентов
+      tags:
+        - Group
+      operationId: getGroup
+      responses: 
+        '200': 
+          description: Успешный ответ со списком студентов
+          content: 
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Group'
+          
+        'default':
+          description: Все нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /group/get/{student_id}:
+    get:
+      summary: Метод получение конкретного студента по идентификатору 
+      tags:
+        - Group
+      operationId: getStudentById
+      parameters:
+        - name: student_id
+          in: path
+          required: true
+          description: Идентификатор студента
+          schema:
+            type: string
+      responses: 
+        '200': 
+          description: Успешный ответ с одним студентом
+          content: 
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Student'
+          
+        'default':
+          description: Все нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              
+  /group/edit/{student_id}:
+    put:
+      summary: Редактирование информации о студенте
+      tags:
+        - Group
+      operationId: updateStudentInformation
+      parameters:
+        - name: student_id
+          in: path
+          required: true
+          description: Уникальный идентификатор студента, информацию о котором нужно обновить
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '200':
+          description: Информация о студенте успешно обновлена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '404':
+          description: Студент не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        'default':
+          description: Непредвиденная ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'            
+  /group/delete/{student_id}:
+    delete: 
+      summary: Удаление студента
+      tags:
+        - Group
+      operationId: deleteStudentById
+      parameters: 
+        - name: student_id
+          in: path
+          required: true
+          description: Идентификатор студента
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешное удаление студента из группы
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+          
+        'default':
+          description: Все нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /groups/add:
+    post:
+      summary: Добавление новой группы
+      tags:
+        - Groups
+      operationId: addGroup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '201':
+          description: Группа успешно создана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        'default':
+          description: Ошибка при создании группы
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /groups/view_groups:
+    get:
+      summary: Метод просмотра групп
+      tags:
+        - Groups
+      operationId: viewGroups
+      responses: 
+        '200': 
+          description: Успешный ответ со списком групп
+          content: 
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Groups'
+          
+        'default':
+          description: Все нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  
+  /groups/edit/{group_id}:
+    put:
+      summary: Редактирование существующей группы
+      tags:
+        - Groups
+      operationId: editGroup
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          description: Идентификатор группы для редактирования
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '200':
+          description: Группа успешно отредактирована
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        'default':
+          description: Ошибка при редактировании группы
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /groups/delete/{group_id}:
+    delete:
+      summary: Удаление группы по идентификатору
+      tags:
+        - Groups
+      operationId: deleteGroupById
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          description: Идентификатор группы
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Группа успешно удалена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Groups'
+        'default':
+          description: Ошибка при удалении группы
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas: 
+    Student: 
+      type: object
+      required: 
+        - surname_name
+        - gender
+        - course
+        - first_normative
+        - second_normative
+        - third_normative
+        - fourth_normative
+        - mark
+      properties:
+        student_id:
+          type: integer
+          example: 1234
+        surname_name:
+          type: string
+          example: Ivanov_Ivan
+        course:
+          type: integer  
+          example: 1
+        group:
+          type: string
+          example: m221
+        gender:
+          type: string
+          example: male
+        first_normative: 
+          type: number
+          example: 174.2
+        second_normative:
+          type: number
+          example: 13.0
+        third_normative:
+          type: number
+          example: 27.4
+        fourth_normative:
+          type: number
+          example: 5.8
+        mark: 
+          type: string
+          example: pass or fail
+    Group:
+      type: array
+      items:
+        $ref: '#/components/schemas/Student'
+    Groups:
+      type: array
+      items:
+        $ref: '#/components/schemas/Group'
+    Error:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Not Found
+    
+     
+     
