@@ -113,7 +113,7 @@ paths:
                 $ref: '#/components/schemas/Error'
               
   /group/edit/{student_id}:
-    put:
+    patch:
       summary: Редактирование информации о студенте
       tags:
         - Group
@@ -141,15 +141,16 @@ paths:
         '404':
           description: Студент не найден
           content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
         'default':
           description: Непредвиденная ошибка
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'            
+                $ref: '#/components/schemas/Error'
+          
   /group/delete/{student_id}:
     delete: 
       summary: Удаление студента
@@ -225,7 +226,7 @@ paths:
                 $ref: '#/components/schemas/Error'
   
   /groups/edit/{group_id}:
-    put:
+    patch:
       summary: Редактирование существующей группы
       tags:
         - Groups
@@ -256,6 +257,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+
   /groups/delete/{group_id}:
     delete:
       summary: Удаление группы по идентификатору
