@@ -10,9 +10,10 @@ app.config.from_object(Config)
 
 
 db = SQLAlchemy(app)
+# db.init_app(app)
 app.app_context().push()
 
-migrate = Migrate(app, db)
+#migrate = Migrate(app, db)
 
 login = LoginManager(app)
 login.login_view = 'login'

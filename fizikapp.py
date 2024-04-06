@@ -1,37 +1,67 @@
 from config import Config
-from flask_login import current_user, login_user, logout_user
 from app.models import User
-from flask import Flask, redirect, url_for, flash, render_template
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, redirect, url_for, flash, render_template, request
+from app import db
 from app.forms import LoginForm
+from flask_login import login_user
 app = Flask(__name__)
 app.config.from_object(Config)
-var = app.config['SQLALCHEMY_DATABASE_URI']
 
+#db = SQLAlchemy(app)
+#app.config['SQLALCHEMY_DATABASE_URI']
+#db.init_app(app)
 @app.route('/')
 @app.route('/home')
 def home():
     return render_template('home.html', title="Home Page")
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
-    # # if current_user.is_authenticated:
-    # #     return redirect(url_for('normative'))
-    # form = LoginForm()
-    # if form.validate_on_submit():
-    #     user = User.query.filter_by(username=form.username.data).first()
-    #     if user is None or not user.check_password(form.password.data):
-    #         flash('Invalid username or password')
-    #         return redirect(url_for('login'))
-    #     login_user(user, remember=form.remember_me.data)
-    #     return redirect(url_for('normative'))
-    return render_template('loginform.html', title='Sign In')
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        # Проверяем, есть ли пользователь в базе данных
+        user = User.query.filter_by(email=email).first()
+        # Если пользователя нет или пароль неверный, выведите сообщение об ошибке
+        if user is None:
+            return 'Неверный email'
+        elif not user.check_password(password):
+            return 'Неверный пароль'
+        else:
+            return 'Вход успешно выполнен'
+    return render_template('loginform.html')
 
 
+
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        # Получить данные из формы
+        fullname = request.form['fullname']
+        email = request.form['name']
+        password = request.form['password']
+
+        # Создать нового пользователя
+        new_user = User(username=fullname, email=email)
+        new_user.set_password(password)
+
+        # Добавить пользователя в базу данных
+        db.session.add(new_user)
+        db.session.commit()
+
+        return 'Регистрация успешно завершена.'
+
+    # Отобразить форму регистрации
+    return render_template('registerform.html')
 
 @app.route('/normative')
 def normative():
     return render_template('formnormative.html')
 
 if __name__ == '__main__':
+    db.init_app(app)
     app.run(debug=True)
