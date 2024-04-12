@@ -1,16 +1,14 @@
 from config import Config
-from app.models import User
+from app.models import User, Student
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, redirect, url_for, flash, render_template, request
 from app import db
-from app.forms import LoginForm
-from flask_login import login_user
+import re
+
 app = Flask(__name__)
 app.config.from_object(Config)
 
-#db = SQLAlchemy(app)
-#app.config['SQLALCHEMY_DATABASE_URI']
-#db.init_app(app)
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -35,32 +33,47 @@ def login():
     return render_template('loginform.html')
 
 
-
-
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
-        # Получить данные из формы
         fullname = request.form['fullname']
         email = request.form['name']
         password = request.form['password']
-
-        # Создать нового пользователя
+        # Проверить соответствие email реальному формату
+        email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        if not re.match(email_pattern, email):
+            return 'Неверный формат email.'
+        existing_email = User.query.filter_by(email=email).first()
+        if existing_email:
+            return 'Пользователь с таким email уже существует.'  # спросить у Даши:
+            # можно ли просто всплывающим сообщением проверять сообщать об этом
         new_user = User(username=fullname, email=email)
         new_user.set_password(password)
-
-        # Добавить пользователя в базу данных
         db.session.add(new_user)
         db.session.commit()
-
         return 'Регистрация успешно завершена.'
-
-    # Отобразить форму регистрации
     return render_template('registerform.html')
 
-@app.route('/normative')
+
+@app.route('/normative', methods=['GET', 'POST'])
 def normative():
-    return render_template('formnormative.html')
+    if request.method == 'POST':
+        name = request.form.get('Имя')
+        course = request.form.get('Курс')
+        group = request.form.get('Группа')
+        gender = request.form.get('Пол')
+        jump = request.form.get('Прыжок')
+        rise = request.form.get('Подъем')
+        slant = request.form.get('Наклон')
+        pullup = request.form.get('Подтягивание')
+        mark = request.form.get('Оценка')
+        new_student = Student(name=name, course=course, group=group, gender=gender, jump=jump, rise=rise, slant=slant, pullup=pullup, mark=mark)
+        db.session.add(new_student)
+        db.session.commit()
+        return render_template('formnormative.html', message='Студент добавлен в базу')
+    else:
+        return render_template('formnormative.html')
+
 
 if __name__ == '__main__':
     db.init_app(app)
