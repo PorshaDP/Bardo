@@ -1,0 +1,52 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+/* nb: не работает фон, почему? */
+body {
+  background: url('/static/bckg.png') no-repeat center center fixed;
+  background-size: cover;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30em;
+  font-family: 'Roboto', sans-serif;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%; /* Ширина поля */
+    padding: 10px; /* Поля */
+    box-sizing: border-box; /* Алгоритм расчёта ширины */
+    box-shadow: inset 0 1px 5px rgba(183, 133, 248, 0.2); /* Тень внутри */
+    border: 1px solid #0306bd; /* Параметры рамки */
+    color: #000000; /* Цвет текста */
+}
+
+label {
+    color: #005BAA;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+  outline: none; /* убираем обводку при фокусе */
+  border-color: #005BAA; /* изменяем цвет границы при фокусе */
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #005BAA;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s; /* добавляем плавный переход */
+  }
+  
+  input[type="submit"]:hover {
+    background: linear-gradient(45deg, #005BAA, #61aff3,#e694ff); /* градиентный фон при наведении */
+  }
+  
+
