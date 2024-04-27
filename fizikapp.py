@@ -74,6 +74,10 @@ def normative():
     else:
         return render_template('formnormative.html')
 
+@app.route('/table')
+def table_view():
+    student = Student.query.order_by(Student.name).all()
+    return render_template('table.html', student=student)
 
 if __name__ == '__main__':
     db.init_app(app)

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Таблица</title>
+    <link rel="stylesheet" type="text/css" href="/static/style_tables.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_tables.css') }}">
+</head>
+
+<body>
+    <main class="table" id="customers_table">
+        <section class="table__header">
+            <h1>Группа М221</h1>
+            <div class="input-group">
+                <input type="search" placeholder="Найти...">
+                <img src="/static/search.png" alt="">
+            </div>
+            <div class="export__file">
+                <label for="export-file" class="export__file-btn" title="Export File"><img src="/static/export.png" alt=""></label>
+                <input type="checkbox" id="export-file">
+                <div class="export__file-options">
+                    <label>Export As &nbsp; &#10140;</label>
+                    <label for="export-file" id="toPDF">PDF <img src="/static/pdf.png" alt=""></label>
+                    <label for="export-file" id="toCSV">CSV <img src="/static/csv.png" alt=""></label>
+                    <label for="export-file" id="toEXCEL">EXCEL <img src="/static/excel.png" alt=""></label>
+                </div>
+            </div>
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> ФИО <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Пол <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Оценка <span class="icon-arrow">&UpArrow;</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+<!--                        <td> Петров Иван Петрович </td>-->
+<!--                        <td> М</td>-->
+<!--                        <td> Зачёт </td>-->
+                        {%for st in student%}
+                        <td> {{st.name}} </td>
+                        <td> {{st.gender}}</td>
+                        <td> {{st.mark}} </td>
+                        {% endfor %}
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td> Иванов Петр Иванович </td>-->
+<!--                        <td> М</td>-->
+<!--                        <td> Незачёт </td>-->
+<!--                    </tr>-->
+            </table>
+        </section>
+    </main>
+    <script src="/static/script_tables.js"></script>
+
+</body>
+
+</html>
