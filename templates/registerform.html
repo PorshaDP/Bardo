@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Регистрация</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/style.css">
 
 
 </head>
 <body>
-  <header class="d-flex flex-wrap justify-content-start py-3 mb-4 border-bottom">
+<header class="d-flex flex-wrap justify-content-start py-3 mb-4 border-bottom">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <svg class="bi me-2" width="40" height="32">
+            <use xlink:href="#bootstrap"></use>
+        </svg>
         <span class="fs-4">Физкультура</span>
     </a>
 
@@ -25,35 +28,35 @@
     </ul>
 </header>
 <div class="wrapper">
-  <div class="header">
-    <h3 class="sign-in">Регистрация</h3>
-  </div>
-  <div class="clear"></div>
-  <form action="/register" method="POST">
-    <div>
-
-      <input class="user-input" type="text" name="fullname" id="fullname" placeholder="Фамилия Имя Отчество"/>
-      <input class="user-input" type="text" name="name" id="name" placeholder="Электронная почта"  />
-    </div>
-    <div>
-
-      <input type="password" name="password" id="password" placeholder="Пароль" />
-    </div>
-    <div>
-      <input type="submit" value="Зарегистрироваться" />
-
-      <span class="forgot-label" onclick="openModal()">Нужна помощь?</span>
+    <div class="header">
+        <h3 class="sign-in">Регистрация</h3>
     </div>
     <div class="clear"></div>
-  </form>
+    <form action="/register" method="POST">
+        <div>
+
+            <input class="user-input" type="text" name="fullname" id="fullname" placeholder="Фамилия Имя Отчество"/>
+            <input class="user-input" type="text" name="name" id="name" placeholder="Электронная почта"/>
+        </div>
+        <div>
+
+            <input type="password" name="password" id="password" placeholder="Пароль"/>
+        </div>
+        <div>
+            <input type="submit" value="Зарегистрироваться"/>
+
+            <span class="forgot-label" onclick="openModal()">Нужна помощь?</span>
+        </div>
+        <div class="clear"></div>
+    </form>
 </div>
 
 
 <div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <p>Что-то для помощи</p>
-  </div>
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p>Что-то для помощи</p>
+    </div>
 </div>
 
 
@@ -64,6 +67,7 @@
   function closeModal() {
     document.getElementById('myModal').style.display = "none";
   }
+
 </script>
 
 </body>
