@@ -29,7 +29,7 @@ def login():
         elif not user.check_password(password):
             return 'Неверный пароль'
         else:
-            return 'Вход успешно выполнен'
+            return redirect('/table')
     return render_template('loginform.html')
 
 
@@ -67,17 +67,77 @@ def normative():
         slant = request.form.get('Наклон')
         pullup = request.form.get('Подтягивание')
         mark = request.form.get('Оценка')
-        new_student = Student(name=name, course=course, group=group, gender=gender, jump=jump, rise=rise, slant=slant, pullup=pullup, mark=mark)
+        new_student = Student(name=name, course=course, group=group, gender=gender, jump=jump, rise=rise, slant=slant,
+                              pullup=pullup, mark=mark)
         db.session.add(new_student)
         db.session.commit()
         return render_template('formnormative.html', message='Студент добавлен в базу')
     else:
         return render_template('formnormative.html')
 
+
 @app.route('/table')
 def table_view():
-    student = Student.query.order_by(Student.name).all()
-    return render_template('table.html', student=student)
+    students = Student.query.order_by(Student.name).all()
+    return render_template('table.html', students=students)
+
+
+# @app.route('/table/edit/<int:id>', methods=['GET', 'POST'])
+# def edit_student(id):
+#     student = Student.query.get(id)
+#     if request.method == 'POST':
+#         student.name = request.form.get('Имя')
+#         student.course = request.form.get('Курс')
+#         student.group = request.form.get('Группа')
+#         student.gender = request.form.get('Пол')
+#         student.jump = request.form.get('Прыжок')
+#         student.rise = request.form.get('Подъем')
+#         student.slant = request.form.get('Наклон')
+#         student.pullup = request.form.get('Подтягивание')
+#         student.mark = request.form.get('Оценка')
+#         try:
+#             db.session.commit()
+#         except:
+#             return "Возникла ошибка"
+#     else:
+#         return render_template('formnormative_edit.html', student=student)
+@app.route('/table/edit/<int:id>', methods=['GET', 'POST'])
+def edit_student(id):
+    student = Student.query.get(id)
+    if not student:
+        return "Студент не найден", 404  # Добавлено сообщение об ошибке, если студент не найден
+
+    if request.method == 'POST':
+        student.name = request.form.get('Имя')
+        student.course = request.form.get('Курс')
+        student.group = request.form.get('Группа')
+        student.gender = request.form.get('Пол')
+        student.jump = request.form.get('Прыжок')
+        student.rise = request.form.get('Подъем')
+        student.slant = request.form.get('Наклон')
+        student.pullup = request.form.get('Подтягивание')
+        student.mark = request.form.get('Оценка')
+        try:
+            db.session.commit()
+            return redirect(url_for(
+                'table_view'))  # Используйте url_for для указания имени функции, которая обрабатывает маршрут '/table'
+        except Exception as e:
+            db.session.rollback()  # Откат изменений в случае ошибки
+            return f"Возникла ошибка: {e}", 500  # Добавлен статус-код 500 для ошибки
+
+    # Этот блок будет выполняться, если метод не POST (т.е. GET)
+    return render_template('formnormative_edit.html', student=student)
+
+@app.route('/table/delete/<int:id>')
+def delete_student(id):
+    student = Student.query.get_or_404(id)
+    try:
+        db.session.delete(student)
+        db.session.commit()
+        return redirect('/table')
+    except:
+        return "При удалении студента возникла ошибка"
+
 
 if __name__ == '__main__':
     db.init_app(app)
