@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_normative.css') }}">
+<!--    <link rel="stylesheet" href="/static/style_normative.css">-->
+    <title>Обновление данных студента</title>
+  </head>
+  <body>
+     <form id="student-form" action="/table/edit/{{ student.id }}" method="post">
+      <label for="name">Имя:</label><br />
+      <input type="text" id="name" name="Имя" required value="{{student.name}}"/><br />
+
+      <label for="course">Курс:</label><br />
+      <input type="number" id="course" name="Курс" required value="{{student.course}}"/><br />
+
+      <label for="group">Группа:</label><br />
+      <input type="text" id="group" name="Группа" required value="{{student.group}}"/><br />
+
+      <label for="gender">Пол:</label><br />
+      <select id="gender" name="Пол" required >
+        <option value="М">М</option>
+        <option value="Ж">Ж</option></select
+      ><br />
+
+      <label for="jump">Прыжок:</label><br />
+      <input type="number" id="jump" name="Прыжок" required value="{{student.jump}}"/><br />
+
+      <label for="rise">Подъем:</label><br />
+      <input type="number" id="rise" name="Подъем" required value="{{student.rise}}"/><br />
+
+      <label for="slant">Наклон:</label><br />
+      <input type="number" id="slant" name="Наклон" required value="{{student.slant}}"/><br />
+
+      <label for="pullup">Подтягивание:</label><br />
+      <input type="number" id="pullup" name="Подтягивание" required value="{{student.pullup}}"/><br />
+
+      <label for="mark">Оценка:</label><br />
+      <input type="text" id="mark" name="Оценка" readonly value="{{student.mark}}"/><br /><br />
+
+      <input type="submit" value="Обновить" />
+    </form>
+
+    <script>
+      document
+        .getElementById("student-form")
+        .addEventListener("input", function () {
+          var gender = document.getElementById("gender").value;
+          var course = parseInt(document.getElementById("course").value);
+
+          var jump = parseInt(document.getElementById("jump").value);
+          var rise = parseInt(document.getElementById("rise").value);
+          var slant = parseInt(document.getElementById("slant").value);
+          var pullup = parseInt(document.getElementById("pullup").value);
+
+          var mark_j, mark_r, mark_s, mark_p;
+          if (gender == "Ж") {
+            if (jump >= 188) {
+              mark_j = 5;
+            } else if (173 <= jump && jump < 188) {
+              mark_j = 4;
+            } else if (157 <= jump && jump < 173) {
+              mark_j = 3;
+            } else if (142 <= jump && jump < 157) {
+              mark_j = 2;
+            } else {
+              mark_j = 1;
+            }
+
+            if (rise >= 45) {
+              mark_r = 5;
+            } else if (37 <= rise && rise < 45) {
+              mark_r = 4;
+            } else if (32 <= rise && rise < 37) {
+              mark_r = 3;
+            } else if (25 <= rise && rise < 32) {
+              mark_r = 2;
+            } else {
+              mark_r = 1;
+            }
+
+            if (slant >= 16) {
+              mark_s = 5;
+            } else if (9 <= slant && slant < 16) {
+              mark_s = 4;
+            } else if (7 <= slant && slant < 9) {
+              mark_s = 3;
+            } else if (4 <= slant && slant < 7) {
+              mark_s = 2;
+            } else {
+              mark_s = 1;
+            }
+
+            if (pullup >= 17) {
+              mark_p = 5;
+            } else if (12 <= pullup && pullup < 17) {
+              mark_p = 4;
+            } else if (8 <= pullup && pullup < 12) {
+              mark_p = 3;
+            } else if (5 <= pullup && pullup < 8) {
+              mark_p = 2;
+            } else {
+              mark_p = 1;
+            }
+          }
+
+          if (gender == 'М')
+          {
+            if (jump >= 235) {
+              mark_j = 5;
+            } else if (213 <= jump && jump < 235) {
+              mark_j = 4;
+            } else if (192 <= jump && jump < 213) {
+              mark_j = 3;
+            } else if (180 <= jump && jump < 192) {
+              mark_j = 2;
+            } else {
+              mark_j = 1;
+            }
+
+            if (rise >= 51) {
+              mark_r = 5;
+            } else if (41 <= rise && rise < 51) {
+              mark_r = 4;
+            } else if (35 <= rise && rise < 41) {
+              mark_r = 3;
+            } else if (25 <= rise && rise < 35) {
+              mark_r = 2;
+            } else {
+              mark_r = 1;
+            }
+
+            if (slant >= 13) {
+              mark_s = 5;
+            } else if (8 <= slant && slant < 13) {
+              mark_s = 4;
+            } else if (6 <= slant && slant < 8) {
+              mark_s = 3;
+            } else if (3 <= slant && slant < 6) {
+              mark_s = 2;
+            } else {
+              mark_s = 1;
+            }
+
+            if (pullup >= 15) {
+              mark_p = 5;
+            } else if (12 <= pullup && pullup < 15) {
+              mark_p = 4;
+            } else if (8 <= pullup && pullup < 12) {
+              mark_p = 3;
+            } else if (5 <= pullup && pullup < 8) {
+              mark_p = 2;
+            } else {
+              mark_p = 1;
+            }
+
+          }
+
+          // Вычисляем среднее значение оценок
+          var average = (mark_j + mark_r + mark_s + mark_p) / 4;
+
+          var mark = "";
+          if (average >= 3) {
+            mark = "Зачёт";
+          } else {
+            mark = "Незачёт";
+          }
+
+          document.getElementById("mark").value = mark;
+        });
+    </script>
+  </body>
+</html>
