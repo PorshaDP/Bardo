@@ -5,55 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Таблицп</title>
+    <title>Таблица</title>
     <link rel="stylesheet" type="text/css" href="/static/style_tables.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style_tables.css') }}">
 </head>
 
 <body>
-    <main class="table" id="customers_table">
-        <section class="table__header">
-            <h1>Группа М221</h1>
-            <div class="input-group">
-                <input type="search" placeholder="Найти...">
-                <img src="/static/search.png" alt="">
+<main class="table" id="customers_table">
+    <section class="table__header">
+        <h1>Группа М221</h1>
+        <div class="input-group">
+            <input type="search" placeholder="Найти...">
+            <img src="/static/search.png" alt="">
+        </div>
+        <div class="export__file">
+            <label for="export-file" class="export__file-btn" title="Export File"><img src="/static/export.png" alt=""></label>
+            <input type="checkbox" id="export-file">
+            <div class="export__file-options">
+                <label>Export As &nbsp; &#10140;</label>
+                <label for="export-file" id="toPDF">PDF <img src="/static/pdf.png" alt=""></label>
+                <label for="export-file" id="toCSV">CSV <img src="/static/csv.png" alt=""></label>
+                <label for="export-file" id="toEXCEL">EXCEL <img src="/static/excel.png" alt=""></label>
             </div>
-            <div class="export__file">
-                <label for="export-file" class="export__file-btn" title="Export File"><img src="/static/export.png" alt=""></label>
-                <input type="checkbox" id="export-file">
-                <div class="export__file-options">
-                    <label>Export As &nbsp; &#10140;</label>
-                    <label for="export-file" id="toPDF">PDF <img src="/static/pdf.png" alt=""></label>
-                    <label for="export-file" id="toCSV">CSV <img src="/static/csv.png" alt=""></label>
-                    <label for="export-file" id="toEXCEL">EXCEL <img src="/static/excel.png" alt=""></label>
-                </div>
-            </div>
-        </section>
-        <section class="table__body">
-            <table>
-                <thead>
-                    <tr>
-                        <th> ФИО <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Пол <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Оценка <span class="icon-arrow">&UpArrow;</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td> Петров Иван Петрович </td>
-                        <td> М</td>
-                        <td> Зачёт </td>
+        </div>
+    </section>
+    <section class="table__body">
+        <table>
+            <thead>
+            <tr>
+                <th> ФИО <span class="icon-arrow">&UpArrow;</span></th>
+                <th> Пол <span class="icon-arrow">&UpArrow;</span></th>
+                <th> Оценка <span class="icon-arrow">&UpArrow;</span></th>
 
-                    </tr>
-                    <tr>
-                        <td> Иванов Петр Иванович </td>
-                        <td> М</td>
-                        <td> Незачёт </td>
-                    </tr>
-            </table>
-        </section>
-    </main>
-    <script src="/static/script_tables.js"></script>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <!--                        <td> Петров Иван Петрович </td>-->
+                <!--                        <td> М</td>-->
+                <!--                        <td> Зачёт </td>-->
+                {% for st in students %}
+            <tr>
+                <td>{{ st.name }}</td>
+                <td>{{ st.gender }}</td>
+                <td>{{ st.mark }}</td>
+                <td>
+                    <a href="/table/edit/{{st.id}}" button class="edit-btn"><img
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAANRJREFUSEvFlO0NwjAMRK+bwCawCWxSJoFNYBPYBGopRlGxffloRP9EatL37EvSCYOfaTAfvYJTKvAB4GUV2yrYAbgCOCSowI+WpEWQw7VqeWdKagVr+D518AQgc+dlvOVR1Qi8WISncc0ALi2CKBaJRvZCRu3o6yjpgMUiMBMuE0zgwb33Pyc1EnTDow42gXuCzeCe4G6ciuLM15tg7cE7LdK5ZrjXQS7ogjNB3q17ztnvPopIv22Gl1w0ViCdZzeZAtiCkogYIzyZfxHUVhyuH74HH4ROOhkrMkcpAAAAAElFTkSuQmCC"
+                            alt="Редактировать"></a>
+                    <a href="/table/delete/{{st.id}}"button class="delete-btn"><img
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAKVJREFUSEvtlcsRgDAIRDedaCdaipVYiqVoKXaiMmNyIIObj7klN0V4C0xch8bHNa4PBpgAbAAGQ8gJYAFwWEIZYH+SBfJ1BDKWAq430RLC4nRErACLRwCfULv70LFuvTnAK6etqxbN74uX9zdAK2TPgZ/aAStYPaIOiO5V7kj6DuivqXpEjJANSDEaDRVXm/VL6yaLi60JbubrmdbJLJONhsabA25OJTgZ1vxrLQAAAABJRU5ErkJggg=="
+                            alt="Удалить"></button></a>
+
+                </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </section>
+</main>
+<script src="/static/script_tables.js"></script>
 
 </body>
 
