@@ -4,7 +4,7 @@
 }
 /* nb: не работает фон, почему? */
 html, body {
-  background: url('static/bckg.png') no-repeat center center fixed;
+  background: url('/static/bckg.png') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Roboto', sans-serif;
 }
