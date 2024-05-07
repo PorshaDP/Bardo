@@ -53,6 +53,7 @@ def register():
         return 'Регистрация успешно завершена.'
     return render_template('registerform.html')
 
+
 @app.route('/normative', methods=['GET', 'POST'])
 def normative():
     if request.method == 'POST':
