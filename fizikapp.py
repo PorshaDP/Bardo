@@ -1,9 +1,10 @@
 from config import Config
 from app.models import User, Student
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, redirect, url_for, flash, render_template, request
+from flask import Flask, redirect, url_for, flash, render_template, request, session
 from app import db
 import re
+from werkzeug.security import check_password_hash
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -12,26 +13,26 @@ app.config.from_object(Config)
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html', title="Home Page")
-
+    return render_template('home.html')
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-
-        # Проверяем, есть ли пользователь в базе данных
         user = User.query.filter_by(email=email).first()
-        # Если пользователя нет или пароль неверный, выведите сообщение об ошибке
-        if user is None:
-            return 'Неверный email'
-        elif not user.check_password(password):
-            return 'Неверный пароль'
+        if user and check_password_hash(user.password_hash, password):
+            session['user_id'] = user.id # Пользователь аутентифицирован, устанавливаем сессию
+            return redirect(url_for('table_view'))
         else:
-            return redirect('/table')
+            flash('Неверный email или пароль')
+            return redirect(url_for('login'))
     return render_template('loginform.html')
 
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('login'))
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -39,21 +40,18 @@ def register():
         fullname = request.form['fullname']
         email = request.form['name']
         password = request.form['password']
-        # Проверить соответствие email реальному формату
         email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
         if not re.match(email_pattern, email):
             return 'Неверный формат email.'
         existing_email = User.query.filter_by(email=email).first()
         if existing_email:
-            return 'Пользователь с таким email уже существует.'  # спросить у Даши:
-            # можно ли просто всплывающим сообщением проверять сообщать об этом
+            return 'Пользователь с таким email уже существует.'
         new_user = User(username=fullname, email=email)
         new_user.set_password(password)
         db.session.add(new_user)
         db.session.commit()
         return 'Регистрация успешно завершена.'
     return render_template('registerform.html')
-
 
 @app.route('/normative', methods=['GET', 'POST'])
 def normative():
@@ -75,38 +73,19 @@ def normative():
     else:
         return render_template('formnormative.html')
 
-
 @app.route('/table')
 def table_view():
-    students = Student.query.order_by(Student.name).all()
-    return render_template('table.html', students=students)
+    if 'user_id' in session:
+        students = Student.query.order_by(Student.name).all()
+        return render_template('table.html', students=students)
+    else:
+        return redirect(url_for('login'))
 
-
-# @app.route('/table/edit/<int:id>', methods=['GET', 'POST'])
-# def edit_student(id):
-#     student = Student.query.get(id)
-#     if request.method == 'POST':
-#         student.name = request.form.get('Имя')
-#         student.course = request.form.get('Курс')
-#         student.group = request.form.get('Группа')
-#         student.gender = request.form.get('Пол')
-#         student.jump = request.form.get('Прыжок')
-#         student.rise = request.form.get('Подъем')
-#         student.slant = request.form.get('Наклон')
-#         student.pullup = request.form.get('Подтягивание')
-#         student.mark = request.form.get('Оценка')
-#         try:
-#             db.session.commit()
-#         except:
-#             return "Возникла ошибка"
-#     else:
-#         return render_template('formnormative_edit.html', student=student)
 @app.route('/table/edit/<int:id>', methods=['GET', 'POST'])
 def edit_student(id):
     student = Student.query.get(id)
     if not student:
-        return "Студент не найден", 404  # Добавлено сообщение об ошибке, если студент не найден
-
+        return "Студент не найден", 404
     if request.method == 'POST':
         student.name = request.form.get('Имя')
         student.course = request.form.get('Курс')
@@ -119,13 +98,10 @@ def edit_student(id):
         student.mark = request.form.get('Оценка')
         try:
             db.session.commit()
-            return redirect(url_for(
-                'table_view'))  # Используйте url_for для указания имени функции, которая обрабатывает маршрут '/table'
+            return redirect(url_for('table_view'))
         except Exception as e:
             db.session.rollback()  # Откат изменений в случае ошибки
-            return f"Возникла ошибка: {e}", 500  # Добавлен статус-код 500 для ошибки
-
-    # Этот блок будет выполняться, если метод не POST (т.е. GET)
+            return f"Возникла ошибка: {e}", 500
     return render_template('formnormative_edit.html', student=student)
 
 @app.route('/table/delete/<int:id>')
