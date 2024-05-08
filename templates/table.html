@@ -5,26 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Таблица</title>
-    <link rel="stylesheet" type="text/css" href="D:/Selfcare_proj-main/static/style_tables.css">
+    <link rel="stylesheet" type="text/css" href="/static/style_tables.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style_tables.css') }}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
 </head>
 <body>
 <main class="table">
     <section class="table__header">
-        <p><a href="{{ url_for('logout') }}">Logout</a></p>
+        <a href="{{ url_for('logout') }}"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAOFJREFUSEvdVW0OgjAMfRMPgjfBQ7AYMFFPgpyEP06TcQi5id5kplvwgyB0ZiTE/u7ra9/6VoGJQ0xcHzMh2NYJjCkAJIyJGwhR4pQ2lMubINc3ADGjeJvSQMm1D4GxSCXHG8r1R+44gAp3QIOTzIcg1xWUPNhug06wucSIospuDEfzrl6DErl1vD4xQQkyvYcAde4X3Sa+TpDVBYQ5+lXvWd1BiZz+JJEzVVCJ2tbfSSYhICIiWSx3OKdl+DXte4SgPvhXAt/v+g4lV/zv2jmcTMi5CT8cHG/3vQC8ezBnggc8+HMZU1ON1wAAAABJRU5ErkJggg==" alt="Выход"/></a>
         <div class="input-group">
             <input type="search" placeholder="Найти...">
             <img src="/static/search.png" alt="">
         </div>
         <div class="export__file">
-            <label for="export-file" class="export__file-btn" title="Export File"><img src="/static/export.png" alt=""></label>
+            <label for="export-file" class="export__file-btn" title="Export File"><img 
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAHlJREFUSEtjZKAxYKSx+QyjFhAM4dEgGpFBFLPageH///lgvzMyJjIsCT0AZpMqDg08zFQUvWo/AwODA1T+AcPSMEUwm1RxIi04wLA0zBGLBYTFcVoACYp6BgYGBSxBRLw4TgsIJjzSFIzmZILhNRpEo0FEMAQIKgAA7EQ8GSPKv9wAAAAASUVORK5CYII=" alt="export"></label>
             <input type="checkbox" id="export-file">
             <div class="export__file-options">
-                <label>Export As &nbsp; &#10140;</label>
-                <label for="export-file" id="toPDF">PDF <img src="/static/pdf.png" alt=""></label>
-                <label for="export-file" id="toCSV">CSV <img src="/static/csv.png" alt=""></label>
+                <label>Экспорт &nbsp; &#10140;</label>
                 <label for="export-file" id="toEXCEL">EXCEL <img src="/static/excel.png" alt=""></label>
-
             </div>
         </div>
     </section>
@@ -44,12 +44,12 @@
                 <td>{{ st.group }}</td>
                 <td>{{ st.mark }}</td>
                 <td>
-                    <a href="/table/edit/{{st.id}}" button class="edit-btn"><img
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAANRJREFUSEvFlO0NwjAMRK+bwCawCWxSJoFNYBPYBGopRlGxffloRP9EatL37EvSCYOfaTAfvYJTKvAB4GUV2yrYAbgCOCSowI+WpEWQw7VqeWdKagVr+D518AQgc+dlvOVR1Qi8WISncc0ALi2CKBaJRvZCRu3o6yjpgMUiMBMuE0zgwb33Pyc1EnTDow42gXuCzeCe4G6ciuLM15tg7cE7LdK5ZrjXQS7ogjNB3q17ztnvPopIv22Gl1w0ViCdZzeZAtiCkogYIzyZfxHUVhyuH74HH4ROOhkrMkcpAAAAAElFTkSuQmCC"
-                            alt="Редактировать"></a>
+                    <a href="/table/edit/{{st.id}}" button class="edit-btn"><img 
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPRJREFUSEvFlNsRgjAQRS9DI9iJFiGj8qOdaCX6AzppQjuRRhCGR4bXbjbhMfJJknN27wY8rPx4K/MxT3BS56rAX/bB65hSxU4THJ4BfP8OYNtAU2TZjpK4C/pwXXUAgJS4CYbwONxUHUTqCyBAjguS8NGNyl7AxVLSdFy5d0Wyv7kLTLGU0dSzSKE76hjkDqRYahgJLxfMAg7OvSfuKS9YAM53sBCcFiwIpwWReo9uhUPmwzGMZxCpvNoUh/XaDDjXQSuYCTcL+r2y91z63fMRtScnw+UPTSrPYl3+VVhATFtsInJT6NvXnPqDwK1ecffqMygAhSx6GSy/eOUAAAAASUVORK5CYII=" 
+                        alt="Редактировать"></a>
                     <a href="/table/delete/{{st.id}}"button class="delete-btn"><img
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAKVJREFUSEvtlcsRgDAIRDedaCdaipVYiqVoKXaiMmNyIIObj7klN0V4C0xch8bHNa4PBpgAbAAGQ8gJYAFwWEIZYH+SBfJ1BDKWAq430RLC4nRErACLRwCfULv70LFuvTnAK6etqxbN74uX9zdAK2TPgZ/aAStYPaIOiO5V7kj6DuivqXpEjJANSDEaDRVXm/VL6yaLi60JbubrmdbJLJONhsabA25OJTgZ1vxrLQAAAABJRU5ErkJggg=="
-                            alt="Удалить"></button></a>
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAALlJREFUSEtjZKAxYKSx+Qz4LYhZ7cDw//98BgYGBRwOecDAyJjIsCT0AC6H4rcgetV+BgYGBwK+fMCwNEyRXAv+gzUuDcPukOhV+OUZGAgEESEDCMljWADTQGnMI/kY1es0twDmciK8juJJPOrJjjzqWoDuQkJ8JNuJ8wEhAykOolELMPIVqUEyGgcEiyaKg4iQDWRYQExFg27tAYalYY7ogthzMqSqrCeiNoOZh7PqHOBKn1DYEyEPAAGMoBkPge7fAAAAAElFTkSuQmCC" 
+                        alt="Удалить"></button></a>
                 </td>
             </tr>
             {% endfor %}
