@@ -2,7 +2,7 @@
 *, *:after, *:before {
   box-sizing: border-box;
 }
-/* nb: не работает фон, почему? */
+
 html, body {
   background: url('/static/bckg.png') no-repeat center center fixed;
   background-size: cover;
@@ -106,17 +106,23 @@ input[type="text"]:focus, input[type="password"]:focus {
 }
 
 input[type="text"] {
-  background: transparent;
+  background-color: #fff5;
+  backdrop-filter: blur(7px);
   border: 2px solid #005BAA;
   padding-left: 45px;
   color: #005BAA;
+  box-shadow: 0 .4rem .8rem #0005;
+  border-radius: .8rem;
 }
 
 input[type="password"] {
-  background: transparent;
+  background-color: #fff5;
+  backdrop-filter: blur(7px);
   border: 2px solid #005BAA;
   padding-left: 45px;
   color: #005BAA;
+  box-shadow: 0 .4rem .8rem #0005;
+  border-radius: .8rem;
 }
 
 input[type="submit"] {
@@ -126,6 +132,8 @@ input[type="submit"] {
   text-align: center;
   font-size: 0.8em;
   cursor: pointer;
+  box-shadow: 0 .4rem .8rem #0005;
+  border-radius: .8rem;
 }
 
 input[type="radio"] {
@@ -136,7 +144,7 @@ input[type="radio"] {
 
 .forgot-label {
   font-size: 0.8em;
-  color: #7f8084;
+  color: #005BAA;
   margin-top: 10px;
   float: right;
   padding: 3px 0;
@@ -163,14 +171,15 @@ input[type="radio"] {
   width: 80%;
 }
 .close {
-  color: #aaa;
+  color: #005BAA;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 .close:hover,
 .close:focus {
-  color: black;
+  color: #003564;
   text-decoration: none;
   cursor: pointer;
 }
+
