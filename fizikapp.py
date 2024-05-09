@@ -1,10 +1,11 @@
 from config import Config
 from app.models import User, Student
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, redirect, url_for, flash, render_template, request, session, get_flashed_messages
+from flask import Flask, redirect, url_for, flash, render_template, request, session, get_flashed_messages, send_file
 from app import db
 import re
 from werkzeug.security import check_password_hash
+import pandas as pd
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -33,6 +34,8 @@ def login():
 def logout():
     session.pop('user_id', None)
     return redirect(url_for('login'))
+
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -115,6 +118,28 @@ def delete_student(id):
     except:
         return "При удалении студента возникла ошибка"
 
+
+@app.route('/export')
+def export(filename='students.xlsx'):
+    students_query = db.session.query(Student).all()
+    students_data = [
+        {
+            'ID': student.id,
+            'Name': student.name,
+            'Course': student.course,
+            'Group': student.group,
+            'Gender': student.gender,
+            'Jump': student.jump,
+            'Rise': student.rise,
+            'Slant': student.slant,
+            'Pullup': student.pullup,
+            'Mark': student.mark
+        } for student in students_query
+    ]
+    # Создание DataFrame из списка словарей
+    df_students = pd.DataFrame(students_data)
+    df_students.to_excel(filename, index=False)
+    return send_file(filename, as_attachment=True)
 
 if __name__ == '__main__':
     db.init_app(app)
