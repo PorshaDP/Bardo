@@ -30,6 +30,9 @@
         <h3 class="sign-in">Вход</h3>
     </div>
     <div class="clear"></div>
+    {% for msg in get_flashed_messages()%}
+    <div class="flash">{{msg}} </div>
+    {% endfor %}
     <form method="POST" action="/login" class="login-form">
         <div>
             <!-- <label class="user" for="email">

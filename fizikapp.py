@@ -1,7 +1,7 @@
 from config import Config
 from app.models import User, Student
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, redirect, url_for, flash, render_template, request, session
+from flask import Flask, redirect, url_for, flash, render_template, request, session, get_flashed_messages
 from app import db
 import re
 from werkzeug.security import check_password_hash
