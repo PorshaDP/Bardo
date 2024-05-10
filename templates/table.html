@@ -14,21 +14,23 @@
 <main class="table">
     <section class="table__header">
         <a href="{{ url_for('logout') }}"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAOFJREFUSEvdVW0OgjAMfRMPgjfBQ7AYMFFPgpyEP06TcQi5id5kplvwgyB0ZiTE/u7ra9/6VoGJQ0xcHzMh2NYJjCkAJIyJGwhR4pQ2lMubINc3ADGjeJvSQMm1D4GxSCXHG8r1R+44gAp3QIOTzIcg1xWUPNhug06wucSIospuDEfzrl6DErl1vD4xQQkyvYcAde4X3Sa+TpDVBYQ5+lXvWd1BiZz+JJEzVVCJ2tbfSSYhICIiWSx3OKdl+DXte4SgPvhXAt/v+g4lV/zv2jmcTMi5CT8cHG/3vQC8ezBnggc8+HMZU1ON1wAAAABJRU5ErkJggg==" alt="Выход"/></a>
-        <!--export to excel here-->
-        <a href="{{ url_for('export') }}"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAOFJREFUSEvdVW0OgjAMfRMPgjfBQ7AYMFFPgpyEP06TcQi5id5kplvwgyB0ZiTE/u7ra9/6VoGJQ0xcHzMh2NYJjCkAJIyJGwhR4pQ2lMubINc3ADGjeJvSQMm1D4GxSCXHG8r1R+44gAp3QIOTzIcg1xWUPNhug06wucSIospuDEfzrl6DErl1vD4xQQkyvYcAde4X3Sa+TpDVBYQ5+lXvWd1BiZz+JJEzVVCJ2tbfSSYhICIiWSx3OKdl+DXte4SgPvhXAt/v+g4lV/zv2jmcTMi5CT8cHG/3vQC8ezBnggc8+HMZU1ON1wAAAABJRU5ErkJggg==" alt="Выход"/></a>
+        <!-- export to excel here
+        <a href="{{ url_for('export') }}"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAOFJREFUSEvdVW0OgjAMfRMPgjfBQ7AYMFFPgpyEP06TcQi5id5kplvwgyB0ZiTE/u7ra9/6VoGJQ0xcHzMh2NYJjCkAJIyJGwhR4pQ2lMubINc3ADGjeJvSQMm1D4GxSCXHG8r1R+44gAp3QIOTzIcg1xWUPNhug06wucSIospuDEfzrl6DErl1vD4xQQkyvYcAde4X3Sa+TpDVBYQ5+lXvWd1BiZz+JJEzVVCJ2tbfSSYhICIiWSx3OKdl+DXte4SgPvhXAt/v+g4lV/zv2jmcTMi5CT8cHG/3vQC8ezBnggc8+HMZU1ON1wAAAABJRU5ErkJggg==" alt="Выход"/></a> -->
         <div class="input-group">
             <input type="search" placeholder="Найти...">
             <img src="/static/search.png" alt="">
         </div>
         <div class="export__file">
-            <label for="export-file" class="export__file-btn" title="Export File"><img 
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAHlJREFUSEtjZKAxYKSx+QyjFhAM4dEgGpFBFLPageH///lgvzMyJjIsCT0AZpMqDg08zFQUvWo/AwODA1T+AcPSMEUwm1RxIi04wLA0zBGLBYTFcVoACYp6BgYGBSxBRLw4TgsIJjzSFIzmZILhNRpEo0FEMAQIKgAA7EQ8GSPKv9wAAAAASUVORK5CYII=" alt="export"></label>
+            <label for="export-file" class="export__file-btn" title="Export File">
+                <a href="{{ url_for('export') }}">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAALxJREFUSEvtlEEOgjAUROeHi+BN4BD8GHHDSfAoLKgmcAi5iXiSb0pUEK2tDcQFdNufeZ3ptISZF82sj6UB0kq6SBU7O3ce7IRXgLWyC4/IZH9X5yA5GOIroDh72Rvp9DX9lm9aXQCEI0gDxfEb2AuwPYUIgvMA0kLx5qMrL4BWGkKIYpRJMy1Aq+n7gFxx5MJYaW8H1kdyH/gnQF9i5HpQy9yzYX1N93UEkXwCSAui7FGC375rD3srwBraDXTKYBn3aosKAAAAAElFTkSuQmCC" alt="export">
+                </a>
+            </label>
             <input type="checkbox" id="export-file">
-            <div class="export__file-options">
-                <label>Экспорт &nbsp; &#10140;</label>
-                <label for="export-file" id="toEXCEL">EXCEL <img src="/static/excel.png" alt=""></label>
-            </div>
         </div>
+        
+        
+        
     </section>
     <section class="table__body">
         <table id="customers_table">
