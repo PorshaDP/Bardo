@@ -6,9 +6,11 @@ from app import db
 import re
 from werkzeug.security import check_password_hash
 import pandas as pd
+from datetime import timedelta
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.permanent_session_lifetime = timedelta(minutes=60)
 
 
 @app.route('/')
@@ -24,6 +26,7 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password_hash, password):
             session['user_id'] = user.id # Пользователь аутентифицирован, устанавливаем сессию
+            session.permanent = True  # Устанавливаем сессию как постоянную, чтобы использовать permanent_session_lifetime
             return redirect(url_for('table_view'))
         else:
             flash('Неверный email или пароль')
