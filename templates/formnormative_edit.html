@@ -8,6 +8,17 @@
     <title>Обновление данных студента</title>
   </head>
   <body>
+    <nav class="navbar">
+      <div class="navdiv">
+          <div class="logo"><a href="/">Физкультура</a></div>
+          <ul>
+              <li><a href="{{url_for('home')}}">Главная</a></li>
+              <li><a href="{{url_for('register')}}">Регистрация</a></li>
+              <li><a href="{{url_for('login')}}">Вход</a></li>
+              <li><a href="{{url_for('normative')}}">Нормативы</a></li>
+          </ul>
+      </div>
+  </nav>
      <form id="student-form" action="/table/edit/{{ student.id }}" method="post">
       <label for="name">Имя:</label><br />
       <input type="text" id="name" name="Имя" required value="{{student.name}}"/><br />
