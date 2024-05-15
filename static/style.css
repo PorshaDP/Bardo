@@ -1,185 +1,207 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
-*, *:after, *:before {
-  box-sizing: border-box;
+
+*{
+    text-decoration: none;
 }
 
 html, body {
-  background: url('/static/bckg.png') no-repeat center center fixed;
-  background-size: cover;
-  font-family: 'Roboto', sans-serif;
+    background: url('/static/bckg.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Roboto', sans-serif;
 }
 
-
 .clear {
-  clear: both;
+    clear: both;
 }
 
 #man-people-user, #lock-locker {
-  fill: white;
+    fill: white;
 }
 
 .wrapper {
-  width: 300px;
-  margin: 12% auto;
+    width: 300px;
+    margin: 12% auto;
 }
 
 form {
-  position: relative;
-}
-
-.clear {
-  clear: both;
+    position: relative;
 }
 
 .sign-in {
-  float: left;
-  color: #005BAA;
-  font-size: 1.3em;
+    float: left;
+    color: #005BAA;
+    font-size: 1.3em;
 }
 
 .button {
-  float: right;
-  color:  #005BAA;
-  border: 1px solid  #005BAA;
-  padding: 7px 15px;
-  border-radius: 3px;
-  font-size: 0.8em;
-  cursor: pointer;
+    float: right;
+    color: #005BAA;
+    border: 1px solid #005BAA;
+    padding: 7px 15px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    cursor: pointer;
 }
 
 .button:hover {
-  color: #d3d3d3;
+    color: #d3d3d3;
 }
 
-.lock {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  margin-top: 10px;
-  padding: 7px;
-  left: 5px;
-}
-.lock::after {
-  content: "";
-  width: 1px;
-  height: 30px;
-  position: absolute;
-  background: #005BAA;
-  top: 0px;
-  left: 100%;
+.lock, .user {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+    padding: 7px;
+    left: 5px;
 }
 
-.user {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  margin-top: 10px;
-  padding: 7px;
-  left: 5px;
-}
-.user::after {
-  content: "";
-  width: 1px;
-  height: 30px;
-  position: absolute;
-  background: #005BAA;
-  top: 0px;
-  left: 100%;
+.lock::after, .user::after {
+    content: "";
+    width: 1px;
+    height: 30px;
+    position: absolute;
+    background: #005BAA;
+    top: 0px;
+    left: 100%;
 }
 
 input {
-  width: 100%;
-  padding: 5px;
-  height: 40px;
-  border-radius: 3px;
-  margin: 5px 0;
-  outline: none;
+    width: 100%;
+    padding: 5px;
+    height: 40px;
+    border-radius: 3px;
+    margin: 5px 0;
+    outline: none;
 }
 
 input[type="text"]:focus, input[type="password"]:focus {
-  border: 1px solid #4572D3;
-  box-shadow: none;
+    border: 1px solid #4572D3;
+    box-shadow: none;
 }
 
 .user-input:focus .user {
-  background: white !important;
+    background: white !important;
 }
 
-input[type="text"] {
-  background-color: #fff5;
-  backdrop-filter: blur(7px);
-  border: 2px solid #005BAA;
-  padding-left: 45px;
-  color: #005BAA;
-  box-shadow: 0 .4rem .8rem #0005;
-  border-radius: .8rem;
-}
-
-input[type="password"] {
-  background-color: #fff5;
-  backdrop-filter: blur(7px);
-  border: 2px solid #005BAA;
-  padding-left: 45px;
-  color: #005BAA;
-  box-shadow: 0 .4rem .8rem #0005;
-  border-radius: .8rem;
+input[type="text"], input[type="password"] {
+    background-color: #fff5;
+    backdrop-filter: blur(7px);
+    border: 2px solid #005BAA;
+    padding-left: 45px;
+    color: #005BAA;
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
 }
 
 input[type="submit"] {
-  background: #005BAA;
-  border: none;
-  color: white;
-  text-align: center;
-  font-size: 0.8em;
-  cursor: pointer;
-  box-shadow: 0 .4rem .8rem #0005;
-  border-radius: .8rem;
+    background: #005BAA;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 0.8em;
+    cursor: pointer;
+    box-shadow: 0 .4rem .8rem #0005;
+    border-radius: .8rem;
 }
 
 input[type="radio"] {
-  display: none;
+    display: none;
 }
 
-
-
 .forgot-label {
-  font-size: 0.8em;
-  color: #005BAA;
-  margin-top: 10px;
-  float: right;
-  padding: 3px 0;
-  cursor: pointer;
+    font-size: 0.8em;
+    color: #005BAA;
+    margin-top: 10px;
+    float: right;
+    padding: 3px 0;
+    cursor: pointer;
 }
 
 .modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
-}
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-.close {
-  color: #005BAA;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-.close:hover,
-.close:focus {
-  color: #003564;
-  text-decoration: none;
-  cursor: pointer;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
 }
 
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #005BAA;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #003564;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.navbar{
+  background-color: #fff5;
+  backdrop-filter: blur(7px);
+  font-family: calibri; 
+  padding-right: 15px;
+  padding-left: 15px;
+  border-radius: .8rem;
+  border: 2px solid #005BAA; /* добавлен стиль solid и ширина 1px */
+}
+
+.navdiv{
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+}
+
+.logo a {
+  font-size: 35px; 
+  font-weight: 600; 
+  /* Создаем линейный градиент от красного к желтому */
+  background-image: linear-gradient(to right, #005BAA, rgb(255, 0, 119));
+  /* Указываем тексту внутри элемента быть прозрачным, чтобы видеть градиент фона */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+li{
+    list-style: none; 
+    display: inline-block;
+}
+
+li a{
+    color:#005BAA; 
+    font-size: 18px; 
+    font-weight: bold; 
+    margin-right: 25px;
+}
+
+button{
+    background-color: black; 
+    margin-left: 10px; 
+    border-radius: 10px; 
+    padding: 10px; 
+    width: 90px;
+}
+
+button a{
+    color: white; 
+    font-weight: bold; 
+    font-size: 15px;
+}

@@ -53,4 +53,51 @@ input[type="submit"] {
     background: linear-gradient(45deg, #005BAA, #61aff3,#e694ff); /* градиентный фон при наведении */
   }
   
+  .navbar {
+    width: 100%;
+    background-color: #fff5;
+    backdrop-filter: blur(7px);
+    font-family: calibri;
+    padding: 15px;
+    border-radius: .8rem;
+    border: 2px solid #005BAA;
+    margin-bottom: 20px; /* Добавлен отступ снизу */
+}
+
+.navdiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Пространство между элементами */
+}
+
+.logo a {
+    font-size: 35px;
+    font-weight: 600;
+    background-image: linear-gradient(to right, #005BAA, rgb(255, 0, 119));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none; /* Убирает подчеркивание */
+}
+
+.nav-items {
+    display: flex;
+    align-items: center;
+}
+
+li {
+    list-style: none;
+}
+
+li a {
+    color: #005BAA;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 25px;
+    text-decoration: none; /* Убирает подчеркивание */
+}
+
+/* Убираем последний margin-right у последнего элемента списка */
+.nav-items li:last-child a {
+    margin-right: 0;
+}
 
