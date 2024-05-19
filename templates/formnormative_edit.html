@@ -1,59 +1,62 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='style_normative.css') }}">
     <link rel="stylesheet" href="/static/style_normative.css">
     <title>Обновление данных студента</title>
-  </head>
-  <body>
-    <nav class="navbar">
-      <div class="navdiv">
-          <div class="logo"><a href="/">Физкультура</a></div>
-          <ul>
-              <li><a href="{{url_for('home')}}">Главная</a></li>
-              <li><a href="{{url_for('register')}}">Регистрация</a></li>
-              <li><a href="{{url_for('login')}}">Вход</a></li>
-              <li><a href="{{url_for('normative')}}">Нормативы</a></li>
-          </ul>
-      </div>
-  </nav>
-     <form id="student-form" action="/table/edit/{{ student.id }}" method="post">
-      <label for="name">Имя:</label><br />
-      <input type="text" id="name" name="Имя" required value="{{student.name}}"/><br />
+</head>
+<body>
+<nav class="navbar">
+    <div class="navdiv">
+        <div class="logo"><a href="/">Физкультура</a></div>
+        <ul>
+            <li><a href="{{url_for('home')}}">Главная</a></li>
+            <li><a href="{{url_for('register')}}">Регистрация</a></li>
+            <li><a href="{{url_for('login')}}">Вход</a></li>
+            <li><a href="{{url_for('normative')}}">Нормативы</a></li>
+        </ul>
+    </div>
+</nav>
+<form id="student-form" action="/table/edit/{{ student.id }}" method="post">
+    <label for="name">Имя:</label><br/>
+    <input type="text" id="name" name="Имя" required value="{{student.name}}"/><br/>
 
-      <label for="course">Курс:</label><br />
-      <input type="number" id="course" name="Курс" required value="{{student.course}}"/><br />
+    <label for="course">Курс:</label><br/>
+    <input type="number" id="course" name="Курс" required value="{{student.course}}"/><br/>
 
-      <label for="group">Группа:</label><br />
-      <input type="text" id="group" name="Группа" required value="{{student.group}}"/><br />
+    <label for="group">Группа:</label><br/>
+    <input type="text" id="group" name="Группа" required value="{{student.group}}"/><br/>
 
-      <label for="gender">Пол:</label><br />
-      <select id="gender" name="Пол" required >
+    <label for="gender">Пол:</label><br/>
+    <select id="gender" name="Пол" required>
         <option value="М">М</option>
-        <option value="Ж">Ж</option></select
-      ><br />
+        <option value="Ж">Ж</option>
+    </select
+    ><br/>
 
-      <label for="jump">Прыжок:</label><br />
-      <input type="number" id="jump" name="Прыжок" required value="{{student.jump}}"/><br />
+    <label for="jump">Прыжок:</label><br/>
+    <input type="number" id="jump" name="Прыжок" required value="{{student.jump}}"/><br/>
 
-      <label for="rise">Подъем:</label><br />
-      <input type="number" id="rise" name="Подъем" required value="{{student.rise}}"/><br />
+    <label for="rise">Подъем:</label><br/>
+    <input type="number" id="rise" name="Подъем" required value="{{student.rise}}"/><br/>
 
-      <label for="slant">Наклон:</label><br />
-      <input type="number" id="slant" name="Наклон" required value="{{student.slant}}"/><br />
+    <label for="slant">Наклон:</label><br/>
+    <input type="number" id="slant" name="Наклон" required value="{{student.slant}}"/><br/>
 
-      <label for="pullup">Подтягивание:</label><br />
-      <input type="number" id="pullup" name="Подтягивание" required value="{{student.pullup}}"/><br />
+    <label for="pullup">Подтягивание:</label><br/>
+    <input type="number" id="pullup" name="Подтягивание" required value="{{student.pullup}}"/><br/>
 
-      <label for="mark">Оценка:</label><br />
-      <input type="text" id="mark" name="Оценка" readonly value="{{student.mark}}"/><br /><br />
+    <label for="mark">Оценка:</label><br/>
+    <input type="text" id="mark" name="Оценка" readonly value="{{student.mark}}"/><br/><br/>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+    <input type="submit" value="Обновить"/>
+</form>
 
-      <input type="submit" value="Обновить" />
-    </form>
-
-    <script>
+<script>
       document
         .getElementById("student-form")
         .addEventListener("input", function () {
@@ -180,6 +183,8 @@
 
           document.getElementById("mark").value = mark;
         });
-    </script>
-  </body>
+
+
+</script>
+</body>
 </html>

@@ -38,7 +38,9 @@
 
       <label for="mark">Оценка:</label><br />
       <input type="text" id="mark" name="Оценка" readonly /><br /><br />
-
+      {% if message %}
+        <p>{{ message }}</p>
+      {% endif %}
       <input type="submit" value="Отправить" />
     </form>
 

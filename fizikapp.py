@@ -1,7 +1,7 @@
 from config import Config
 from app.models import User, Student
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, redirect, url_for, flash, render_template, request, session, get_flashed_messages, send_file
+from flask import Flask, redirect, url_for, flash, render_template, request, session, get_flashed_messages, send_file, make_response
 from app import db
 import re
 from werkzeug.security import check_password_hash
@@ -59,10 +59,43 @@ def register():
     return render_template('registerform.html')
 
 
+def validate_name(name):
+    pattern = r"^[A-Za-zА-Яа-я]{2,20}\s[A-Za-zА-Яа-я]{2,20}$"
+    return re.match(pattern, name) is not None
+
+# @app.route('/normative', methods=['GET', 'POST'])
+# def normative():
+#     if request.method == 'POST':
+#         name = request.form.get('Имя')
+#         if not validate_name(name):
+#             return render_template('formnormative.html', message='Некорректное имя и фамилия.')
+#         course = request.form.get('Курс')
+#         group = request.form.get('Группа')
+#         gender = request.form.get('Пол')
+#         jump = request.form.get('Прыжок')
+#         rise = request.form.get('Подъем')
+#         slant = request.form.get('Наклон')
+#         pullup = request.form.get('Подтягивание')
+#         mark = request.form.get('Оценка')
+#         new_student = Student(name=name, course=course, group=group, gender=gender, jump=jump, rise=rise, slant=slant,
+#                               pullup=pullup, mark=mark)
+#         db.session.add(new_student)
+#         db.session.commit()
+#         return render_template('formnormative.html', message='Студент добавлен в базу')
+#     else:
+#         return render_template('formnormative.html')
+
 @app.route('/normative', methods=['GET', 'POST'])
 def normative():
+    response = make_response(render_template('formnormative.html'))
     if request.method == 'POST':
+        # устанавливаем куки для отслеживания времени
+        if request.cookies.get('has_submitted'):
+            return make_response(render_template('formnormative.html', message='Вы уже отправили данные.'), 429)
         name = request.form.get('Имя')
+        if not validate_name(name):
+            return render_template('formnormative.html', message='Некорректное имя и фамилия.')
+
         course = request.form.get('Курс')
         group = request.form.get('Группа')
         gender = request.form.get('Пол')
@@ -71,11 +104,15 @@ def normative():
         slant = request.form.get('Наклон')
         pullup = request.form.get('Подтягивание')
         mark = request.form.get('Оценка')
-        new_student = Student(name=name, course=course, group=group, gender=gender, jump=jump, rise=rise, slant=slant,
-                              pullup=pullup, mark=mark)
+
+        new_student = Student(name=name, course=course, group=group, gender=gender, jump=jump, rise=rise, slant=slant, pullup=pullup, mark=mark)
         db.session.add(new_student)
         db.session.commit()
-        return render_template('formnormative.html', message='Студент добавлен в базу')
+
+        # Установить cookie, указывающий, что форма уже отправлена
+        response.set_cookie('has_submitted', 'true', max_age=60*60*24)  # 24 часа
+        response.data = render_template('formnormative.html', message='Студент добавлен в базу')
+        return response
     else:
         return render_template('formnormative.html')
 
