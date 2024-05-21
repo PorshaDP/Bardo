@@ -1,4 +1,4 @@
-from config import Config
+from config import Config, sign_in_key
 from app.models import User, Student
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, redirect, url_for, flash, render_template, request, session, get_flashed_messages, send_file, make_response
@@ -12,10 +12,6 @@ app = Flask(__name__)
 app.config.from_object(Config)
 app.permanent_session_lifetime = timedelta(minutes=60)
 
-@app.route('/')
-@app.route('/home')
-def home():
-    return render_template('home.html')
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -37,54 +33,46 @@ def logout():
     session.pop('user_id', None)
     return redirect(url_for('login'))
 
-
-
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
         fullname = request.form['fullname']
-        email = request.form['name']
+        email = request.form['email']
         password = request.form['password']
+        registration_key = request.form['key']
+        if registration_key != sign_in_key:
+            flash('Неверный идентифицирующий код.')  # Использование flash для сообщения
+            return render_template('registerform.html')
         email_pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
         if not re.match(email_pattern, email):
-            return 'Неверный формат email.'
+            flash('Неверный формат email.')  # Использование flash для сообщения
+            return render_template('registerform.html')
         existing_email = User.query.filter_by(email=email).first()
         if existing_email:
-            return 'Пользователь с таким email уже существует.'
-        new_user = User(username=fullname, email=email)
-        new_user.set_password(password)
-        db.session.add(new_user)
-        db.session.commit()
-        return 'Регистрация успешно завершена.'
+            flash('Пользователь с таким email уже существует.')  # Использование flash для сообщения
+            return render_template('registerform.html')
+        try:
+            new_user = User(username=fullname, email=email)
+            new_user.set_password(password)  # Убедитесь, что этот метод корректно хэширует пароль
+            db.session.add(new_user)
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+            flash('Произошла ошибка при регистрации. Пожалуйста, попробуйте снова.')  # Использование flash для сообщения
+            return render_template('registerform.html')
+        return redirect(url_for('login'))  # После регистрации перенаправляем на страницу входа
     return render_template('registerform.html')
 
-
+# !!!обработка 2 и 3 слов
 def validate_name(name):
-    pattern = r"^[A-Za-zА-Яа-я]{2,20}\s[A-Za-zА-Яа-я]{2,20}$"
+    if name is None:
+        return False
+    # Изменённое регулярное выражение, которое принимает два или три слова
+    pattern = r"^[A-Za-zА-Яа-я]{2,20}(?:\s[A-Za-zА-Яа-я]{2,20}){1,2}$"
     return re.match(pattern, name) is not None
 
-# @app.route('/normative', methods=['GET', 'POST'])
-# def normative():
-#     if request.method == 'POST':
-#         name = request.form.get('Имя')
-#         if not validate_name(name):
-#             return render_template('formnormative.html', message='Некорректное имя и фамилия.')
-#         course = request.form.get('Курс')
-#         group = request.form.get('Группа')
-#         gender = request.form.get('Пол')
-#         jump = request.form.get('Прыжок')
-#         rise = request.form.get('Подъем')
-#         slant = request.form.get('Наклон')
-#         pullup = request.form.get('Подтягивание')
-#         mark = request.form.get('Оценка')
-#         new_student = Student(name=name, course=course, group=group, gender=gender, jump=jump, rise=rise, slant=slant,
-#                               pullup=pullup, mark=mark)
-#         db.session.add(new_student)
-#         db.session.commit()
-#         return render_template('formnormative.html', message='Студент добавлен в базу')
-#     else:
-#         return render_template('formnormative.html')
-
+@app.route('/')
 @app.route('/normative', methods=['GET', 'POST'])
 def normative():
     response = make_response(render_template('formnormative.html'))
@@ -92,7 +80,7 @@ def normative():
         # устанавливаем куки для отслеживания времени
         if request.cookies.get('has_submitted'):
             return make_response(render_template('formnormative.html', message='Вы уже отправили данные.'), 429)
-        name = request.form.get('Имя')
+        name = request.form.get('ФИО')
         if not validate_name(name):
             return render_template('formnormative.html', message='Некорректное имя и фамилия.')
 
@@ -164,21 +152,25 @@ def export(filename='students.xlsx'):
     students_data = [
         {
             'ID': student.id,
-            'Name': student.name,
-            'Course': student.course,
-            'Group': student.group,
-            'Gender': student.gender,
-            'Jump': student.jump,
-            'Rise': student.rise,
-            'Slant': student.slant,
-            'Pullup': student.pullup,
-            'Mark': student.mark
+            'ФИО': student.name,
+            'Курс': student.course,
+            'Группа': student.group,
+            'Пол': student.gender,
+            'Прыжок': student.jump,
+            'Подъем': student.rise,
+            'Растяжка': student.slant,
+            'Подтягивания': student.pullup,
+            'Оценка': student.mark
         } for student in students_query
     ]
     # Создание DataFrame из списка словарей
     df_students = pd.DataFrame(students_data)
     df_students.to_excel(filename, index=False)
     return send_file(filename, as_attachment=True)
+
+@app.route('/change_pswd')
+def change_pswd():
+    pass
 
 if __name__ == '__main__':
     db.init_app(app)
