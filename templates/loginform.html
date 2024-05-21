@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Вход</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="/static/style.css">
-
 </head>
 <body>
 <nav class="navbar">
     <div class="navdiv">
         <div class="logo"><a href="/">Физкультура</a></div>
         <ul>
-            <li><a href="{{url_for('home')}}">Главная</a></li>
-            <li><a href="{{url_for('register')}}">Регистрация</a></li>
+            <!-- <li><a href="{{url_for('home')}}">Главная</a></li> -->
+            <!-- <li><a href="{{url_for('register')}}">Регистрация</a></li> -->
             <li><a href="{{url_for('login')}}">Вход</a></li>
             <li><a href="{{url_for('normative')}}">Нормативы</a></li>
         </ul>
@@ -27,33 +26,19 @@
     </div>
     <div class="clear"></div>
     {% for msg in get_flashed_messages()%}
-    <div class="flash">{{msg}} </div>
+    <div class="flash">{{msg}}</div>
     {% endfor %}
     <form method="POST" action="/login" class="login-form">
         <div>
-            <!-- <label class="user" for="email">
-              <svg viewBox="0 0 32 32">
-                <g filter="">
-                  <use xlink:href="#man-people-user"></use>
-                </g>
-              </svg>
-            </label> -->
             <input class="user-input" type="text" name="email" id="email" placeholder="Электронная почта"/>
         </div>
         <div>
-            <!-- <label class="lock" for="password">
-              <svg viewBox="0 0 32 32">
-                <g filter="">
-                  <use xlink:href="#lock-locker"></use>
-                </g>
-              </svg>
-            </label> -->
             <input type="password" name="password" id="password" placeholder="Пароль"/>
         </div>
         <div>
             <input type="submit" value="Войти"/>
-
-            <!-- <span class="forgot-label" onclick="openModal()">Забыли пароль?</span> -->
+            <a class="forgot-label" href="{{url_for('change_pswd')}}">Забыли пароль?</a>
+            <a class="existing-user-label" href="{{url_for('register')}}">Еще не наш пользователь?</a>
         </div>
         <div class="clear"></div>
     </form>

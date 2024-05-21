@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ url_for('static', filename='style_normative.css') }}">
     <link rel="stylesheet" href="/static/style_normative.css">
     <title>Форма студента</title>
-  </head>
-  <body>
-    <form id="student-form" action="/normative" method="post">
-      <label for="name">Имя:</label><br />
-      <input type="text" id="name" name="Имя" required /><br />
+</head>
+<body>
+    <form id="student-form" action="/normative" method="post" onsubmit="return validateForm()">
+        <label for="name">Имя:</label><br />
+        <input type="text" id="name" name="ФИО" placeholder="Введите ваше ФИО" /><br />
 
-      <label for="course">Курс:</label><br />
-      <input type="number" id="course" name="Курс" required /><br />
 
-      <label for="group">Группа:</label><br />
-      <input type="text" id="group" name="Группа" required /><br />
+        <label for="course">Курс:</label><br />
+        <input type="number" id="course" name="Курс" placeholder="Введите курс" required /><br />
 
-      <label for="gender">Пол:</label><br />
-      <select id="gender" name="Пол" required>
-        <option value="М">М</option>
-        <option value="Ж">Ж</option></select
-      ><br />
+        <label for="group">Группа:</label><br />
+        <input type="text" id="group" name="Группа" placeholder="Введите номер группы" required /><br />
 
-      <label for="jump">Прыжок:</label><br />
-      <input type="number" id="jump" name="Прыжок" required /><br />
+        <label for="gender">Пол:</label><br />
+        <select id="gender" name="Пол" required>
+            <option value="М">М</option>
+            <option value="Ж">Ж</option>
+        </select><br />
 
-      <label for="rise">Подъем:</label><br />
-      <input type="number" id="rise" name="Подъем" required /><br />
+        <label for="jump">Прыжок:</label><br />
+        <input type="number" id="jump" name="Прыжок" placeholder="Пример: 165" required /><br />
 
-      <label for="slant">Наклон:</label><br />
-      <input type="number" id="slant" name="Наклон" required /><br />
+        <label for="rise">Подъем:</label><br />
+        <input type="number" id="rise" name="Подъем" placeholder="Пример: 37" required /><br />
 
-      <label for="pullup">Подтягивание:</label><br />
-      <input type="number" id="pullup" name="Подтягивание" required /><br />
+        <label for="slant">Наклон:</label><br />
+        <input type="number" id="slant" name="Наклон" placeholder="Пример: 9" required /><br />
 
-      <label for="mark">Оценка:</label><br />
-      <input type="text" id="mark" name="Оценка" readonly /><br /><br />
-      {% if message %}
-        <p>{{ message }}</p>
-      {% endif %}
-      <input type="submit" value="Отправить" />
+        <label for="pullup">Подтягивание:</label><br />
+        <input type="number" id="pullup" name="Подтягивание" placeholder="Пример: 12" required /><br />
+
+        <label for="mark">Оценка:</label><br />
+        <input type="text" id="mark" name="Оценка" readonly /><br /><br />
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+        <input type="submit" value="Отправить" />
     </form>
 
     <script>
+
       document
         .getElementById("student-form")
         .addEventListener("input", function () {
