@@ -101,3 +101,12 @@ li a {
     margin-right: 0;
 }
 
+p
+{
+  color: #005BAA;
+}
+
+::placeholder {
+  color: gray;
+}
+
