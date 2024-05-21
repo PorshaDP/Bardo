@@ -135,6 +135,7 @@ def edit_student(id):
             return f"Возникла ошибка: {e}", 500
     return render_template('formnormative_edit.html', student=student)
 
+
 @app.route('/table/delete/<int:id>')
 def delete_student(id):
     student = Student.query.get_or_404(id)
@@ -168,9 +169,27 @@ def export(filename='students.xlsx'):
     df_students.to_excel(filename, index=False)
     return send_file(filename, as_attachment=True)
 
-@app.route('/change_pswd')
+
+@app.route('/change_password', methods=['GET', 'POST'])
 def change_pswd():
-    pass
+    if request.method == 'POST':
+        email = request.form['email']
+        user = User.query.filter_by(email=email).first()
+        if user is None:
+            flash('Пользователь не найден')
+            return redirect(url_for('change_pswd'))
+
+        new_password = request.form['password']
+        confirm_password = request.form['confirmPassword']
+
+        if new_password != confirm_password:
+            flash('Новый пароль и подтверждение не совпадают')
+        else:
+            user.set_password(new_password)
+            db.session.commit()  # Сохраняем изменения в базе данных
+            flash('Пароль успешно изменен')
+            return redirect(url_for('change_pswd'))  # Перенаправляем пользователя на страницу входа
+    return render_template('change_pswd.html')  # Путь к вашему HTML-шаблону для смены пароля
 
 if __name__ == '__main__':
     db.init_app(app)
