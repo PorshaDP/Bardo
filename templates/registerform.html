@@ -13,7 +13,6 @@
     <div class="navdiv">
         <div class="logo"><a href="/">Физкультура</a></div>
         <ul>
-            <li><a href="{{url_for('home')}}">Главная</a></li>
             <!-- <li><a href="{{url_for('register')}}">Регистрация</a></li> -->
             <li><a href="{{url_for('login')}}">Вход</a></li>
             <li><a href="{{url_for('normative')}}">Нормативы</a></li>
@@ -29,14 +28,25 @@
     <form action="/register" method="POST">
         <div>
             <input class="user-input" type="text" name="fullname" id="fullname" placeholder="Фамилия Имя Отчество"/>
-            <input class="user-input" type="text" name="name" id="name" placeholder="Электронная почта"/>
+            <input class="user-input" type="text" name="email" id="email" placeholder="Электронная почта"/>
         </div>
         <div>
             <input type="password" name="password" id="password" placeholder="Пароль"/>
         </div>
         <div>
-            <input type="password" name="password" id="password" placeholder="Хуй"/>
+            <input class="user-input" type="text" name="key" id="key" placeholder="Ключ доступа"/>
         </div>
+<!--        сделай пожалуйста тут тоже текст синим-->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+
         <div>
             <input type="submit" value="Зарегистрироваться"/>
             <a class="existing-user-label" href="{{url_for('login')}}">Уже наш пользователь?</a>
