@@ -10,15 +10,10 @@
 </head>
 <body>
 
-
 <div class="mainDiv">
     <div class="cardStyle">
         <form action="" method="post" name="signupForm" id="signupForm">
-
-
-            <h2 class="formTitle">
-                Изменить пароль
-            </h2>
+            <h2 class="formTitle">Изменить пароль</h2>
 
             <div class="inputDiv">
                 <label class="inputLabel" for="email">Укажите свою почту</label>
@@ -27,13 +22,20 @@
 
             <div class="inputDiv">
                 <label class="inputLabel" for="password">Новый пароль</label>
-                <input type="password" id="password" name="password" required>
+                <div class="inputContainer">
+                    <input type="password" id="password" name="password" required>
+                    <i class='bx bx-show togglePassword' id="togglePassword"></i>
+                </div>
             </div>
 
             <div class="inputDiv">
                 <label class="inputLabel" for="confirmPassword">Повторите пароль</label>
-                <input type="password" id="confirmPassword" name="confirmPassword">
+                <div class="inputContainer">
+                    <input type="password" id="confirmPassword" name="confirmPassword">
+                    <i class='bx bx-show togglePassword' id="toggleConfirmPassword"></i>
+                </div>
             </div>
+
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             <ul>
@@ -48,12 +50,37 @@
                     <span>Продолжить</span>
                 </button>
             </div>
-
-
         </form>
     </div>
 </div>
 
-</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        togglePassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the icon
+            this.classList.toggle('bx-hide');
+            this.classList.toggle('bx-show');
 
-<script src="/static/script_profile.js"></script>
+        });
+
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const confirmPassword = document.getElementById('confirmPassword');
+        toggleConfirmPassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPassword.setAttribute('type', type);
+            // toggle the icon
+            this.classList.toggle('bx-hide');
+            this.classList.toggle('bx-show');
+            
+        });
+    });
+</script>
+
+</body>
+</html>

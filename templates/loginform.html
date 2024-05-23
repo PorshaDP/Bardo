@@ -34,7 +34,9 @@
             <input type="password" name="password" id="password" placeholder="Пароль"/>
         </div>
         <div>
-            <input type="submit" value="Войти"/>
+            <div class="buttonContainer">
+                <input type="submit" value="Войти"/>
+            </div>
             <a class="forgot-label" href="{{url_for('change_pswd')}}">Забыли пароль?</a>
             <a class="existing-user-label" href="{{url_for('register')}}">Еще не наш пользователь?</a>
         </div>
