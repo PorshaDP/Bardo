@@ -99,3 +99,20 @@ const downloadFile = function (data, fileType, fileName = '') {
     a.click();
     a.remove();
 }
+
+document.getElementById("delete-all-data-btn").addEventListener("click", function() {
+    if (confirm("Вы уверены, что хотите удалить все данные?")) {
+        fetch('/delete_all_data', {
+            method: 'POST'
+        }).then(response => {
+            if (response.ok) {
+                alert("Все данные успешно удалены.");
+
+            } else {
+                alert("Ошибка при удалении данных.");
+            }
+        }).catch(error => {
+            console.error('Ошибка:', error);
+        });
+    }
+});

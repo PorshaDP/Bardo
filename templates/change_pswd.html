@@ -9,6 +9,17 @@
 
 </head>
 <body>
+<nav class="navbar">
+        <div class="navdiv">
+            <div class="logo"><a href="/">Физкультура</a></div>
+            <ul class="nav-items">
+
+                <!-- <li><a href="{{url_for('register')}}">Регистрация</a></li> -->
+                 <li><a href="{{url_for('login')}}">Вход</a></li>
+                <li><a href="{{url_for('normative')}}">Нормативы</a></li>
+            </ul>
+        </div>
+    </nav>
 
 <div class="mainDiv">
     <div class="cardStyle">
@@ -77,7 +88,7 @@
             // toggle the icon
             this.classList.toggle('bx-hide');
             this.classList.toggle('bx-show');
-            
+
         });
     });
 </script>

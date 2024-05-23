@@ -73,6 +73,11 @@
         </table>
     </section>
 </main>
+
+<form id="delete-all-students-form" action="{{ url_for('delete_all_students') }}" method="post">
+    <button id="delete-all-data-btn">Удалить все данные</button>
+</form>
+
 <script src="/static/script_tables.js"></script>
 </body>
 </html>

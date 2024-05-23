@@ -118,7 +118,7 @@ def edit_student(id):
     if not student:
         return "Студент не найден", 404
     if request.method == 'POST':
-        student.name = request.form.get('Имя')
+        student.name = request.form.get('ФИО')
         student.course = request.form.get('Курс')
         student.group = request.form.get('Группа')
         student.gender = request.form.get('Пол')
@@ -190,6 +190,19 @@ def change_pswd():
             flash('Пароль успешно изменен')
             return redirect(url_for('change_pswd'))  # Перенаправляем пользователя на страницу входа
     return render_template('change_pswd.html')  # Путь к вашему HTML-шаблону для смены пароля
+
+@app.route('/table/delete_all_students', methods=['POST'])
+def delete_all_students():
+    try:
+        num_deleted = db.session.query(Student).delete()
+        db.session.commit()
+        flash(f'Все студенты удалены. Количество удаленных записей: {num_deleted}', 'info')
+    except Exception as e:
+        db.session.rollback()
+        flash('Произошла ошибка при удалении студентов.', 'error')
+        return str(e), 500
+    return redirect(url_for('table_view'))
+
 
 if __name__ == '__main__':
     db.init_app(app)
