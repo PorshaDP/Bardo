@@ -127,9 +127,7 @@ button[disabled] {
   .logo a {
     font-size: 35px; 
     font-weight: 600; 
-    /* Создаем линейный градиент от красного к желтому */
     background-image: linear-gradient(to right, #005BAA, rgb(255, 0, 119));
-    /* Указываем тексту внутри элемента быть прозрачным, чтобы видеть градиент фона */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -138,6 +136,7 @@ button[disabled] {
   li{
       list-style: none; 
       display: inline-block;
+      color:#005BAA; 
   }
   
   li a{
@@ -147,3 +146,18 @@ button[disabled] {
       margin-right: 25px;
   }
   
+  .inputContainer {
+    position: relative;
+}
+.inputContainer input {
+    width: 100%;
+    padding-right: 30px; 
+}
+.inputContainer .togglePassword {
+    position: absolute;
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #005BAA;
+}
